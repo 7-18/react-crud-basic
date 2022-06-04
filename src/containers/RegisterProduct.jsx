@@ -1,5 +1,5 @@
 import { Button, Container, Form, FormControl, InputGroup } from "react-bootstrap"
-import { MdOutlineAddBusiness } from "react-icons/md"
+import { BsShop } from "react-icons/bs"
 import { useForm } from "../hooks/useForm";
 import { uploadFile } from "../helpers/uploadFile";
 import axios from "axios";
@@ -33,7 +33,7 @@ export const RegisterProduct = () => {
 
   return (
     <Container className="p-5 justify-content-center vh-100">
-      <h2 className="text-center display-5 p-5">Register a product <MdOutlineAddBusiness className="ms-2" /></h2>
+      <h2 className="text-center display-5 p-5">Register a product <BsShop className="ms-2" /></h2>
       <Form className="p-5 border">
         <Form.Group className="mb-3" controlId="formBasicNamel">
           <Form.Control type="text" name="name" placeholder="Enter a product name..." onChange={handleChange} />

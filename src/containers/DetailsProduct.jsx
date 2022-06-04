@@ -7,19 +7,24 @@ import { getProducts } from "../services/getProducts"
 import { AiOutlineEdit } from "react-icons/ai"
 import { BsTrash } from "react-icons/bs"
 import axios from "axios"
+import { ModalComponent } from "../components/ModalComponent"
 
-export const DetailsProduct = () => {
-  const [loading, products] = useProducts()
+export const DetailsProduct = ({ products, sP }) => {
+  const [loading] = useProducts()
   const [data, setData] = useState(products)
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    getProducts().then(res => setData(res))
+  }, [products])
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const { id } = useParams()
   const navigate = useNavigate()
 
   const product = data.find(product => product.id == id)
-
-  useEffect(() => {
-    setData(products)
-  }, [products])
 
   const deleteProduct = () => {
     const url = `https://jsonapi-react-basic.herokuapp.com/products/${id}`
@@ -27,7 +32,6 @@ export const DetailsProduct = () => {
       navigate("/listProducts")
     })
   }
-
   return (
     <Container>
       {loading ? <SpinnerComponent /> : <>
@@ -45,7 +49,8 @@ export const DetailsProduct = () => {
               <h2 className="fs-1 h1 fw-bold">{product?.name}</h2>
               <h3 className="mb-2">US$ {product?.price}</h3>
               <p>{product?.description}</p>
-              <Button variant="outline-success me-3">Edit product <AiOutlineEdit className="ms-1" /></Button>
+              <Button variant="outline-success me-3" onClick={handleShow}>Edit product <AiOutlineEdit className="ms-1" /></Button>
+              <ModalComponent show={show} handleClose={handleClose} product={product} sP={sP} />
               <Button variant="outline-danger" onClick={deleteProduct}>Delete product <BsTrash className="ms-1" /></Button>
             </Col>
           </Row>
